@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>تعلم الأمازيغية (الورقلية)</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .group-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    .group-grid button {
+      background-color: #fdd8e7;
+      border: 1px solid #faa2c3;
+      padding: 14px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .group-grid button:hover {
+      background-color: #f06292;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>📘 تعلم الأمازيغية (الورقلية)</h1>
+  <p style="margin: 10px auto 10px; max-width: 600px; background: #fff6f9; border: 1px solid #f8acc7; padding: 10px; border-radius: 10px; text-align: center; line-height: 1.6; color: #444;">
+  <span style="font-size: 1.4em; margin-left: 8px;">✍️</span>
+  سيساعدك هذا التطبيق على تعلم اللغة الأمازيغية (الورقلية)، حيث أنه يحتوي على مجموعة من الكلمات العربية وترجمتها بالأمازيغية (الورقلية)، كما أنه يتيح لك إمكانية إضافة كلمات جديدة، تعديلها وحذفها.
+</p>
+
+<p style="margin-top: 20px; text-align: center; color: #444; font-weight: bold;">
+    اضغط على أي مجموعة لعرض محتواها:
+  </p>
+  <div class="controls">
+    <input type="text" id="globalSearchInput" placeholder="🔍 ابحث في كل الكلمات..." />
+    <button onclick="window.location.href='quiz.html'" class="quiz-btn">🧠 الاختبارات</button>
+    
+  </div>
+  <div id="searchResults" style="display:none; max-width:600px; margin: 10px auto; background:#fff0f4; padding:10px; border:1px solid #faa2c3; border-radius:8px;"></div>
+  <div class="group-grid" id="groupGrid"></div>
+  <script>
+    const groups = [
+      "الضمائر", "الأوقات", "الخضر", "الفواكه", "الحيوانات",
+      "الأرقام", "الألوان", "الأقارب", "التحيات", "الأشياء",
+      "الصفات","الأفعال","الأكل", "الجسم", "الملابس", "الأواني",
+      "في المنزل","كلمات أخرى", "بعض الجمل المتكررة"
+    ];
+
+    const groupGrid = document.getElementById("groupGrid");
+
+    groups.forEach(group => {
+      const btn = document.createElement("button");
+      btn.textContent = group;
+      btn.onclick = () => {
+        window.location.href = `group.html?group=${encodeURIComponent(group)}`;
+      };
+      groupGrid.appendChild(btn);
+    });
+
+    document.getElementById("globalSearchInput").addEventListener("input", function() {
+      const q = this.value.trim();
+      if (!q) {
+        document.getElementById("searchResults").style.display = "none";
+        document.getElementById("searchResults").innerHTML = "";
+        return;
+      }
+      const results = [];
+      const data = JSON.parse(localStorage.getItem("amazighData")) || {};
+      for (const group in data) {
+        data[group].forEach((item, index) => {
+          if (item.word.includes(q) || item.translation.includes(q)) {
+            results.push(`📂 ${group}: ${item.translation} ⇨ ${item.word}`);
+          }
+        });
+      }
+      const resultsBox = document.getElementById("searchResults");
+      if (results.length) {
+        resultsBox.style.display = "block";
+        resultsBox.innerHTML = "<b>🔎 نتائج البحث:</b><br>" + results.map(r => `<div style='margin: 5px 0;'>${r}</div>`).join("");
+      } else {
+        resultsBox.style.display = "block";
+        resultsBox.innerHTML = "<div style='color: #999;'>🙁 لم يتم العثور على نتائج.</div>";
+      }
+    });
+  
+document.getElementById("exportBtn").addEventListener("click", () => {
+  const data = JSON.parse(localStorage.getItem("amazighData") || "{}");
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "amazigh_data_export.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+});
+
+</script>
+</body>
+</html>

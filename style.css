@@ -1,0 +1,150 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #ffeaf4;
+  margin: 0;
+  padding: 20px;
+  direction: rtl;
+  text-align: right;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 6vw;
+}
+
+p {
+  font-size: 1.2em;
+  text-align: center;
+  color: #555;
+  max-width: 700px;
+  margin: auto;
+}
+
+.controls, .word-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+input[type="text"] {
+  padding: 12px;
+  font-size: 1.2em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1 1 200px;
+}
+
+button {
+  padding: 10px 14px;
+  font-size: 1em;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+#groupTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+#groupTabs button {
+  background-color: #fdd8e7;
+  border: 1px solid #faa2c3;
+}
+
+#groupTabs button.active {
+  background-color: #f06292;
+  color: white;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  border-radius: 6px;
+  font-size: 1.2em;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .controls, .word-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  li {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  input[type="text"], button {
+    width: 100%;
+  }
+}
+
+
+input[type="text"], .word-form input, #wordList input {
+  font-size: 16px;
+  padding: 14px;
+}
+
+#wordList li {
+  font-size: 16px;
+}
+
+
+#wordList input {
+  text-align: center;
+  font-weight: bold;
+}
+
+
+.word-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.word-form input, .word-form button {
+  text-align: center;
+  font-weight: bold;
+}
+
+
+/* تكبير حجم الخط لعناصر الإدخال */
+input[type="text"] {
+  font-size: 1.2em !important;
+  padding: 8px !important;
+}
+
+/* تكبير حجم الخط لنتائج البحث */
+#searchResults {
+  font-size: 1.2em !important;
+}
+
+/* تكبير حجم الخط لأزرار المجموعات */
+.group-grid button {
+  font-size: 1.2em !important;
+  padding: 16px !important;
+}
